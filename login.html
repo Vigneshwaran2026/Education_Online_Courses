@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Stackly Education</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --navy: #172554;
+            --text: #334155;
+            --muted: #64748b;
+            --light: #f3f7ff;
+            --border: #e2e8f0;
+            --white: #ffffff;
+            --danger: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .login-header {
+            width: 100%;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--navy);
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .brand-logo .logo-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 22px;
+        }
+
+        .brand-logo span small {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--navy);
+            background: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .home-button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Main Layout */
+        .login-main {
+            width: 100%;
+            max-width: 1250px;
+            flex: 1;
+            margin: auto;
+            padding: 55px 25px;
+            display: grid;
+            grid-template-columns: 1fr 460px;
+            align-items: center;
+            gap: 70px;
+        }
+
+        /* Left Education Content */
+        .login-intro {
+            max-width: 580px;
+        }
+
+        .intro-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            border-radius: 30px;
+            background: #dbeafe;
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .login-intro h1 {
+            margin: 25px 0 20px;
+            color: var(--navy);
+            font-size: clamp(38px, 4.5vw, 58px);
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .login-intro h1 span {
+            color: var(--primary);
+        }
+
+        .login-intro > p {
+            max-width: 510px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        .intro-features {
+            display: grid;
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 19px;
+        }
+
+        .intro-feature h3 {
+            margin-bottom: 5px;
+            color: var(--navy);
+            font-size: 15px;
+        }
+
+        .intro-feature p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Login Card */
+        .login-card {
+            width: 100%;
+            padding: 38px;
+            background: var(--white);
+            border: 1px solid #e8edf5;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(23, 37, 84, 0.09);
+        }
+
+        .login-card-header {
+            margin-bottom: 28px;
+        }
+
+        .login-card-header h2 {
+            margin-bottom: 9px;
+            color: var(--navy);
+            font-size: 29px;
+            font-weight: 800;
+        }
+
+        .login-card-header p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper > i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 52px;
+            padding: 0 45px;
+            outline: none;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fbfdff;
+            color: var(--navy);
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: var(--white);
+        }
+
+        .form-control.invalid {
+            border-color: var(--danger);
+        }
+
+        .form-control.valid {
+            border-color: #16a34a;
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 14px;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        .field-error {
+            display: block;
+            margin-top: 6px;
+            color: var(--danger);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .field-error:empty {
+            display: none;
+        }
+
+        .password-hint {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .password-hint i {
+            margin-right: 4px;
+            color: var(--primary);
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 3px 0 23px;
+        }
+
+        .remember-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .remember-option input {
+            accent-color: var(--primary);
+        }
+
+        .forgot-link {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            min-height: 53px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            border-radius: 9px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .login-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .login-status {
+            margin-top: 14px;
+            color: var(--danger);
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .login-status:empty {
+            display: none;
+        }
+
+        .signup-prompt {
+            margin-top: 25px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .signup-prompt a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .signup-prompt a:hover {
+            text-decoration: underline;
+        }
+
+        .login-footer {
+            padding: 20px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .login-main {
+                grid-template-columns: 1fr 420px;
+                gap: 35px;
+            }
+
+            .login-card {
+                padding: 30px;
+            }
+
+            .login-intro h1 {
+                font-size: 43px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .login-main {
+                max-width: 540px;
+                grid-template-columns: 1fr;
+                gap: 35px;
+                padding: 40px 20px;
+            }
+
+            .login-intro {
+                text-align: center;
+            }
+
+            .login-intro > p {
+                margin: auto;
+            }
+
+            .intro-features {
+                display: none;
+            }
+
+            .login-intro h1 {
+                margin-top: 18px;
+                font-size: 39px;
+            }
+
+            .login-card {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-header {
+                padding: 15px;
+            }
+
+            .brand-logo {
+                gap: 8px;
+                font-size: 19px;
+            }
+
+            .brand-logo .logo-icon {
+                width: 39px;
+                height: 39px;
+                font-size: 18px;
+            }
+
+            .brand-logo span small {
+                font-size: 8px;
+                letter-spacing: 1.5px;
+            }
+
+            .home-button {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .home-button i {
+                display: none;
+            }
+
+            .login-main {
+                padding: 30px 15px;
+            }
+
+            .login-intro h1 {
+                font-size: 32px;
+            }
+
+            .login-intro > p {
+                font-size: 14px;
+            }
+
+            .login-card {
+                padding: 23px 19px;
+                border-radius: 15px;
+            }
+
+            .login-card-header h2 {
+                font-size: 25px;
+            }
+
+            .form-options {
+                align-items: flex-start;
+            }
+        }
+
+        .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo__image {
+    display: block;
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+    </style>
+</head>
+
+<body>
+<div class="login-page">
+
+    <!-- Header -->
+    <header class="login-header">
+       <a href="index.html" class="brand-logo" aria-label="Stackly Education home">
+    <img src="assets/images/logo.webp"
+         alt="Stackly Education Logo"
+         class="brand-logo__image">
+</a>
+
+        <a href="index.html" class="home-button">
+            <i class="fa-solid fa-house"></i>
+            Back to Home
+        </a>
+    </header>
+
+    <!-- Main -->
+    <main class="login-main">
+
+        <!-- Education Introduction -->
+        <section class="login-intro">
+            <span class="intro-label">
+                <i class="fa-solid fa-book-open"></i>
+                Your Learning Journey
+            </span>
+
+            <h1>
+                Welcome Back to
+                <span>Better Learning.</span>
+            </h1>
+
+            <p>
+                Sign in to access your education dashboard, explore learning
+                resources, track your progress, and continue working toward
+                your academic goals.
+            </p>
+
+            <div class="intro-features">
+                <div class="intro-feature">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h3>Role-Based Access</h3>
+                        <p>Separate dashboard destinations for administrators and students.</p>
+                    </div>
+                </div>
+
+                <div class="intro-feature">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                        <h3>Learning Made Simple</h3>
+                        <p>Keep your educational activities and progress in one place.</p>
+                    </div>
+                </div>
+
+                <div class="intro-feature">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h3>Track Your Journey</h3>
+                        <p>Continue learning and work toward your future goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Form -->
+        <section class="login-card">
+            <div class="login-card-header">
+                <h2>Sign In</h2>
+                <p>Enter your details to access your account.</p>
+            </div>
+
+            <form id="loginForm" novalidate>
+
+                <!-- Role -->
+                <div class="form-group">
+                    <label for="role">Login As</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user-tag"></i>
+                        <select id="role" name="role" class="form-control" required>
+                            <option value="student">Student</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                    <small class="field-error" id="roleError"></small>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="you@example.com"
+                            autocomplete="username"
+                            maxlength="254"
+                            required
+                        >
+                    </div>
+                    <small class="field-error" id="emailError"></small>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            minlength="8"
+                            maxlength="128"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            aria-label="Show password"
+                        >
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                    <small class="field-error" id="passwordError"></small>
+                    <p class="password-hint">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Use 8+ characters with uppercase, lowercase, a number,
+                        and a special character.
+                    </p>
+                </div>
+
+                <!-- Options -->
+                <div class="form-options">
+                    <label class="remember-option">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+
+                    <a href="404.html" class="forgot-link">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="login-button" id="loginButton">
+                    <span>Sign In to Dashboard</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <p class="login-status" id="loginStatus" role="alert"></p>
+
+                <div class="signup-prompt">
+                    Don't have an account?
+                    <a href="signup.html">Create an Account</a>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="login-footer">
+        &copy; <span id="currentYear"></span> Stackly Education. All rights reserved.
+    </footer>
+</div>
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+    const roleInput = document.getElementById("role");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const rememberMe = document.getElementById("rememberMe");
+    const loginStatus = document.getElementById("loginStatus");
+    const loginButton = document.getElementById("loginButton");
+
+    document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+    // Show or hide password
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+
+        this.innerHTML = isPassword
+            ? '<i class="fa-regular fa-eye-slash"></i>'
+            : '<i class="fa-regular fa-eye"></i>';
+
+        this.setAttribute(
+            "aria-label",
+            isPassword ? "Hide password" : "Show password"
+        );
+    });
+
+    // Email format validation
+    function validateEmail(value) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        return emailPattern.test(value);
+    }
+
+    // Strong password validation
+    function validatePassword(value) {
+        return (
+            value.length >= 8 &&
+            value.length <= 128 &&
+            /[A-Z]/.test(value) &&
+            /[a-z]/.test(value) &&
+            /[0-9]/.test(value) &&
+            /[^A-Za-z0-9]/.test(value) &&
+            !/\s/.test(value)
+        );
+    }
+
+    function showError(input, errorId, message) {
+        const errorElement = document.getElementById(errorId);
+
+        errorElement.textContent = message;
+        input.classList.toggle("invalid", Boolean(message));
+        input.classList.toggle("valid", !message && input.value.trim() !== "");
+        input.setAttribute("aria-invalid", message ? "true" : "false");
+
+        return !message;
+    }
+
+    function checkEmail() {
+        const email = emailInput.value.trim();
+
+        if (!email) {
+            return showError(emailInput, "emailError", "Email address is required.");
+        }
+
+        if (!validateEmail(email)) {
+            return showError(emailInput, "emailError", "Please enter a valid email address.");
+        }
+
+        return showError(emailInput, "emailError", "");
+    }
+
+    function checkPassword() {
+        const password = passwordInput.value;
+
+        if (!password) {
+            return showError(passwordInput, "passwordError", "Password is required.");
+        }
+
+        if (!validatePassword(password)) {
+            return showError(
+                passwordInput,
+                "passwordError",
+                "Use 8+ characters with uppercase, lowercase, a number, and a special character. Spaces are not allowed."
+            );
+        }
+
+        return showError(passwordInput, "passwordError", "");
+    }
+
+    function checkRole() {
+        if (!["admin", "student"].includes(roleInput.value)) {
+            return showError(roleInput, "roleError", "Please select a valid role.");
+        }
+
+        return showError(roleInput, "roleError", "");
+    }
+
+    emailInput.addEventListener("blur", checkEmail);
+    emailInput.addEventListener("input", function () {
+        if (emailInput.classList.contains("invalid")) checkEmail();
+    });
+
+    passwordInput.addEventListener("blur", checkPassword);
+    passwordInput.addEventListener("input", function () {
+        if (passwordInput.classList.contains("invalid")) checkPassword();
+    });
+
+    roleInput.addEventListener("change", checkRole);
+
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        loginStatus.textContent = "";
+
+        const roleValid = checkRole();
+        const emailValid = checkEmail();
+        const passwordValid = checkPassword();
+
+        if (!roleValid || !emailValid || !passwordValid) {
+            loginStatus.textContent = "Please correct the highlighted fields.";
+            return;
+        }
+
+        /*
+          FRONTEND DEMO ONLY:
+          These checks validate field formats, not account credentials.
+          Real authentication must be implemented on a backend.
+        */
+
+        const email = emailInput.value.trim().toLowerCase();
+        const role = roleInput.value;
+        const loginTime = new Date().toISOString();
+
+        const loginData = {
+            email: email,
+            role: role,
+            loginTime: loginTime
+        };
+
+        try {
+            // Store details for the dashboard in this browser tab.
+            sessionStorage.setItem("stacklyLogin", JSON.stringify(loginData));
+
+            if (rememberMe.checked) {
+                localStorage.setItem("stacklyRememberedEmail", email);
+            } else {
+                localStorage.removeItem("stacklyRememberedEmail");
+            }
+
+            loginButton.disabled = true;
+            loginButton.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i><span>Opening Dashboard...</span>';
+
+            window.location.href = role === "admin"
+                ? "admin-dashboard.html"
+                : "students-dashboard.html";
+
+        } catch (error) {
+            loginStatus.textContent =
+                "Unable to save login details in this browser. Please enable browser storage and try again.";
+
+            loginButton.disabled = false;
+            loginButton.innerHTML =
+                '<span>Sign In to Dashboard</span><i class="fa-solid fa-arrow-right"></i>';
+        }
+    });
+
+    // Fill the email if Remember Me was previously selected.
+    try {
+        const rememberedEmail = localStorage.getItem("stacklyRememberedEmail");
+
+        if (rememberedEmail) {
+            emailInput.value = rememberedEmail;
+            rememberMe.checked = true;
+        }
+    } catch (error) {
+        // Continue normally if browser storage is unavailable.
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#674CEF">
+  <title>404 | Page Not Found - Stackly Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    :root {
+      --font: "Plus Jakarta Sans", sans-serif;
+      --text: #7B7980;
+      --base: #674CEF;
+      --primary: #EF802E;
+      --secondary: #39D4D6;
+      --pink: #EF2E73;
+      --green: #6FCF97;
+      --purple: #8346FC;
+      --black: #20104B;
+      --white: #FFFFFF;
+      --white2: #EDEAF4;
+      --white3: #F7F3FF;
+      --border: #DBD8E6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; width: 100%; overflow-x: hidden; }
+    body { font-family: var(--font); color: var(--black); background: var(--white3); }
+    a { color: inherit; text-decoration: none; }
+    .page-shell { min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .page-shell::before, .page-shell::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
+    .page-shell::before { width: 370px; height: 370px; top: 90px; left: -230px; background: #39d4d61c; }
+    .page-shell::after { width: 450px; height: 450px; right: -270px; bottom: -160px; background: #8346fc14; }
+    .site-header { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 18px clamp(18px, 5vw, 76px); background: rgba(255,255,255,.88); border-bottom: 1px solid var(--border); }
+    .brand { display: inline-flex; align-items: center; justify-content: center; min-width: 150px; }
+    .brand img { display: block; width: 190px; max-width: 100%; height: 52px; object-fit: contain; }
+    .header-link { display: inline-flex; align-items: center; gap: 9px; color: var(--base); font-size: 13px; font-weight: 700; transition: color .2s ease; }
+    .header-link:hover { color: var(--primary); }
+    main { position: relative; z-index: 1; flex: 1; display: grid; place-items: center; padding: 48px 20px 58px; }
+    .error-layout { width: min(1080px, 100%); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(28px, 5vw, 72px); }
+    .illustration { min-height: 380px; display: grid; place-items: center; position: relative; }
+    .illustration-card { width: min(420px, 100%); aspect-ratio: 1 / .88; position: relative; display: grid; place-items: center; border: 1px solid #e3dcff; border-radius: 38px; background: linear-gradient(145deg, #fff 10%, #f1edff 100%); box-shadow: 0 25px 70px #674cef14; }
+    .illustration-card::before { content: ""; position: absolute; width: 235px; height: 235px; border-radius: 50%; background: #e3dcff; }
+    .book-stack { position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%) rotate(-4deg); width: 190px; height: 105px; }
+    .book { position: absolute; height: 28px; width: 180px; border-radius: 7px 11px 11px 7px; box-shadow: 0 5px 0 #20104b12; }
+    .book::after { content: ""; position: absolute; left: 15px; top: 0; bottom: 0; width: 5px; background: #ffffff8a; }
+    .book-one { bottom: 0; left: 5px; background: var(--primary); transform: rotate(3deg); }
+    .book-two { bottom: 29px; left: 0; background: var(--base); transform: rotate(-3deg); }
+    .book-three { bottom: 58px; left: 10px; background: var(--secondary); transform: rotate(2deg); }
+    .cap { position: absolute; top: 65px; left: 50%; transform: translateX(-50%) rotate(-8deg); width: 125px; height: 60px; }
+    .cap-top { position: absolute; left: 0; top: 0; width: 125px; height: 42px; background: var(--black); clip-path: polygon(50% 0, 100% 35%, 50% 70%, 0 35%); }
+    .cap-base { position: absolute; left: 27px; top: 27px; width: 72px; height: 30px; border-radius: 0 0 35px 35px; background: #34216e; }
+    .cap-tassel { position: absolute; top: 20px; right: 8px; width: 3px; height: 38px; background: var(--primary); transform: rotate(-12deg); border-radius: 3px; }
+    .cap-tassel::after { content: ""; position: absolute; bottom: -3px; left: -3px; width: 9px; height: 9px; background: var(--primary); border-radius: 50%; }
+    .float-icon { position: absolute; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: #fff; box-shadow: 0 12px 30px #20104b12; font-size: 19px; }
+    .float-icon.star { top: 44px; right: 36px; color: var(--primary); transform: rotate(12deg); }
+    .float-icon.pencil { left: 30px; top: 150px; color: var(--base); transform: rotate(-13deg); }
+    .float-icon.check { right: 25px; bottom: 75px; color: #26975b; }
+    .error-copy { padding: 12px 0; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #e1d9ff; border-radius: 30px; background: #fff; color: var(--base); font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
+    .error-code { margin: 22px 0 8px; color: var(--base); font-size: clamp(76px, 10vw, 120px); line-height: .95; font-weight: 800; letter-spacing: -8px; }
+    h1 { max-width: 480px; font-size: clamp(28px, 3.3vw, 42px); line-height: 1.2; letter-spacing: -1.5px; font-weight: 800; }
+    .description { max-width: 440px; margin-top: 16px; color: var(--text); font-size: 14px; line-height: 1.9; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 19px; border: 1px solid transparent; border-radius: 10px; background: var(--base); color: #fff; font-size: 12px; font-weight: 800; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px #674cef2c; background: var(--black); }
+    .btn.secondary { background: #fff; color: var(--black); border-color: var(--border); }
+    .btn.secondary:hover { color: var(--base); border-color: var(--base); background: #fff; box-shadow: none; }
+    .help-text { margin-top: 25px; color: var(--text); font-size: 11px; }
+    .help-text a { color: var(--base); font-weight: 800; }
+    footer { position: relative; z-index: 1; padding: 18px 20px; border-top: 1px solid var(--border); background: #ffffffa8; color: var(--text); text-align: center; font-size: 11px; }
+    footer strong { color: var(--black); }
+    @media (max-width: 800px) {
+      .error-layout { grid-template-columns: 1fr; gap: 18px; max-width: 560px; }
+      .illustration { min-height: 310px; order: 1; }
+      .illustration-card { width: min(340px, 100%); }
+      .illustration-card::before { width: 190px; height: 190px; }
+      .book-stack { transform: translateX(-50%) scale(.82) rotate(-4deg); bottom: 38px; }
+      .cap { transform: translateX(-50%) scale(.85) rotate(-8deg); top: 45px; }
+      .float-icon.star { top: 25px; right: 12px; }
+      .float-icon.pencil { left: 8px; top: 115px; }
+      .float-icon.check { right: 6px; bottom: 42px; }
+      .error-copy { text-align: center; order: 2; }
+      h1, .description { margin-left: auto; margin-right: auto; }
+      .actions { justify-content: center; }
+      .error-code { letter-spacing: -5px; }
+    }
+    @media (max-width: 480px) {
+      .site-header { padding: 13px 16px; }
+      .brand { min-width: 0; }
+      .brand img { width: 155px; height: 44px; }
+      .header-link { font-size: 11px; }
+      main { padding: 30px 18px 42px; }
+      .illustration { min-height: 260px; }
+      .illustration-card { width: 280px; border-radius: 28px; }
+      .illustration-card::before { width: 160px; height: 160px; }
+      .float-icon { width: 40px; height: 40px; font-size: 16px; border-radius: 12px; }
+      .error-code { margin-top: 18px; font-size: 76px; }
+      h1 { font-size: 29px; }
+      .description { font-size: 12px; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a href="index.html" class="brand" aria-label="Stackly Education home">
+        <img src="assets/images/logo.webp" alt="Stackly Education Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+        <span style="display:none;align-items:center;gap:8px;color:#20104B;font-weight:800;font-size:20px"><i class="fa-solid fa-graduation-cap" style="color:#674CEF"></i> Stackly <span style="color:#674CEF">Education</span></span>
+      </a>
+      <a class="header-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </header>
+
+    <main>
+      <section class="error-layout" aria-labelledby="error-title">
+        <div class="illustration" aria-hidden="true">
+          <div class="illustration-card">
+            <div class="float-icon star"><i class="fa-solid fa-star"></i></div>
+            <div class="float-icon pencil"><i class="fa-solid fa-pencil"></i></div>
+            <div class="float-icon check"><i class="fa-solid fa-check"></i></div>
+            <div class="cap"><div class="cap-top"></div><div class="cap-base"></div><div class="cap-tassel"></div></div>
+            <div class="book-stack"><div class="book book-one"></div><div class="book book-two"></div><div class="book book-three"></div></div>
+          </div>
+        </div>
+        <div class="error-copy">
+          <span class="eyebrow"><i class="fa-solid fa-compass"></i> Looks like you took a wrong turn</span>
+          <div class="error-code">404</div>
+          <h1 id="error-title">Oops! This page is off the syllabus.</h1>
+          <p class="description">The page you’re looking for may have moved, been removed, or is taking a study break. Let’s get you back to learning.</p>
+          <div class="actions">
+            <a class="btn" href="index.html"><i class="fa-solid fa-house"></i> Back to Home</a>
+            <button class="btn secondary" type="button" id="backButton"><i class="fa-solid fa-arrow-left"></i> Go Back</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year">2026</span> <strong>Stackly Education.</strong> Learn something amazing every day.</footer>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('backButton').addEventListener('click', function () {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

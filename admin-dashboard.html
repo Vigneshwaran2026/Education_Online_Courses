@@ -1,0 +1,1875 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Education | Admin Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        :root {
+            --font: "Plus Jakarta Sans", sans-serif;
+            --text: #7B7980;
+            --base: #674CEF;
+            --primary: #EF802E;
+            --secondary: #39D4D6;
+            --pink: #EF2E73;
+            --green: #6FCF97;
+            --purple: #8346FC;
+            --black: #20104B;
+            --white: #FFFFFF;
+            --white2: #EDEAF4;
+            --white3: #F7F3FF;
+            --border: #DBD8E6;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--white3);
+            color: var(--black);
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform .3s ease;
+        }
+
+        .brand {
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            background: var(--base);
+            color: var(--white);
+            border-radius: 13px;
+            font-size: 22px;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .brand-name small {
+            display: block;
+            color: var(--base);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-label {
+            padding: 22px 20px 10px;
+            color: var(--text);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 12px 15px;
+        }
+
+        .nav-link {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            margin-bottom: 5px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text);
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .nav-link i {
+            width: 19px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--white3);
+            color: var(--base);
+        }
+
+        .nav-link.active {
+            box-shadow: inset 3px 0 var(--base);
+        }
+
+        .sidebar-bottom {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .help-card {
+            padding: 16px;
+            border-radius: 13px;
+            background: var(--white3);
+        }
+
+        .help-card i {
+            color: var(--base);
+            font-size: 20px;
+        }
+
+        .help-card h4 {
+            margin: 10px 0 5px;
+            font-size: 13px;
+        }
+
+        .help-card p {
+            margin-bottom: 12px;
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .help-card a {
+            color: var(--base);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .main {
+            min-height: 100vh;
+            margin-left: var(--sidebar-width);
+            transition: margin .3s ease;
+        }
+
+        /* Header: no search bar */
+        .top-header {
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 28px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left h1 {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .header-left p {
+            margin-top: 4px;
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--black);
+            font-size: 17px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-avatar {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--white3);
+            color: var(--base);
+            font-size: 17px;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .profile-info small {
+            display: block;
+            margin-top: 4px;
+            color: var(--text);
+            font-size: 11px;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 15px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--base);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--black);
+        }
+
+        .content {
+            padding: 28px;
+            max-width: 1700px;
+            margin: auto;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn .25s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .welcome-row h2 {
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .welcome-row p {
+            margin-top: 7px;
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 15px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--base);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .btn:hover {
+            filter: brightness(.92);
+        }
+
+        .btn-orange {
+            background: var(--primary);
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--black);
+            border: 1px solid var(--border);
+        }
+
+        .btn-danger {
+            background: var(--pink);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            padding: 22px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .stat-top p {
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            font-size: 17px;
+        }
+
+        .stat-icon.purple { color: var(--base); background: #EDE8FF; }
+        .stat-icon.orange { color: var(--primary); background: #FFF0E4; }
+        .stat-icon.green { color: #24965A; background: #E5F9ED; }
+        .stat-icon.pink { color: var(--pink); background: #FFE7F0; }
+
+        .stat-card h3 {
+            margin: 18px 0 8px;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .stat-card .trend {
+            color: #24965A;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .stat-card .trend.neutral {
+            color: var(--text);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(270px, 1fr);
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .panel {
+            min-width: 0;
+            padding: 22px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 22px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h3 {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .panel-header p {
+            margin-top: 5px;
+            color: var(--text);
+            font-size: 11px;
+        }
+
+        .panel-header a {
+            color: var(--base);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: var(--white3);
+            color: var(--base);
+            border-radius: 10px;
+        }
+
+        .activity-item h4 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .activity-item p {
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .activity-item time {
+            display: block;
+            margin-top: 5px;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .progress-item {
+            margin-bottom: 19px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 9px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .progress-info span:last-child {
+            color: var(--text);
+        }
+
+        .progress-track {
+            height: 7px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: var(--white2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--base);
+        }
+
+        .progress-bar.orange { background: var(--primary); }
+        .progress-bar.green { background: var(--green); }
+        .progress-bar.pink { background: var(--pink); }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .toolbar input,
+        .toolbar select,
+        .form-control {
+            min-height: 42px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--black);
+            outline: none;
+            font-size: 12px;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 170px;
+        }
+
+        .toolbar select {
+            min-width: 135px;
+        }
+
+        .toolbar input:focus,
+        .toolbar select:focus,
+        .form-control:focus {
+            border-color: var(--base);
+            box-shadow: 0 0 0 3px #674cef18;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        th {
+            padding: 13px 14px;
+            background: var(--white3);
+            color: var(--text);
+            text-align: left;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        td {
+            padding: 15px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--black);
+            font-size: 11px;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        tbody tr:hover {
+            background: #FBFAFF;
+        }
+
+        .person-cell {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .mini-avatar {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--white2);
+            color: var(--base);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .person-cell strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .person-cell small {
+            display: block;
+            margin-top: 4px;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .status.active,
+        .status.published,
+        .status.completed,
+        .status.present,
+        .status.paid {
+            color: #23864F;
+            background: #E5F9ED;
+        }
+
+        .status.pending,
+        .status.draft,
+        .status.upcoming,
+        .status.late {
+            color: #B86A19;
+            background: #FFF0DD;
+        }
+
+        .status.inactive,
+        .status.absent,
+        .status.overdue {
+            color: #C92A5B;
+            background: #FFE7F0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 7px;
+        }
+
+        .icon-btn {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--white);
+            color: var(--base);
+        }
+
+        .icon-btn:hover {
+            background: var(--white3);
+        }
+
+        .icon-btn.delete {
+            color: var(--pink);
+        }
+
+        .empty-state {
+            padding: 25px;
+            text-align: center;
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .course-card,
+        .event-card {
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .course-icon {
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            background: var(--white3);
+            color: var(--base);
+            font-size: 19px;
+        }
+
+        .course-card h3,
+        .event-card h3 {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .course-card p,
+        .event-card p {
+            margin-bottom: 14px;
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 13px;
+            border-top: 1px solid var(--border);
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .event-date {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            background: var(--white3);
+            color: var(--base);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .message-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .message-item:last-child {
+            border-bottom: 0;
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-content h4 {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .message-content p {
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .message-content small {
+            display: block;
+            margin-top: 7px;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .settings-form label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .settings-form input,
+        .settings-form select,
+        .settings-form textarea {
+            width: 100%;
+        }
+
+        .settings-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .settings-note {
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            background: #20104B80;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            z-index: 2000;
+            max-width: calc(100% - 40px);
+            padding: 14px 18px;
+            border-radius: 10px;
+            background: var(--black);
+            color: var(--white);
+            box-shadow: 0 8px 25px #20104B30;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+            transition: .25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer {
+            padding: 20px 28px;
+            color: var(--text);
+            text-align: center;
+            font-size: 11px;
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: grid;
+                place-items: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .top-header {
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-header {
+                min-height: 72px;
+                padding: 12px 14px;
+                gap: 8px;
+            }
+
+            .header-left,
+            .header-right {
+                gap: 9px;
+            }
+
+            .header-left h1 {
+                font-size: 16px;
+            }
+
+            .header-left p {
+                font-size: 10px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .profile-avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logout-btn {
+                padding: 10px;
+                font-size: 11px;
+            }
+
+            .logout-btn span {
+                display: none;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .stats-grid,
+            .cards-grid,
+            .settings-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stat-card,
+            .panel {
+                padding: 17px;
+            }
+
+            .welcome-row h2 {
+                font-size: 20px;
+            }
+
+            .welcome-row p {
+                font-size: 11px;
+            }
+
+            .toolbar {
+                align-items: stretch;
+            }
+
+            .toolbar input,
+            .toolbar select {
+                width: 100%;
+                min-width: 0;
+                flex: 1 1 100%;
+            }
+
+            .footer {
+                padding: 18px 12px;
+            }
+        }
+
+        .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 85px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-logo {
+    display: block;
+    width: 190px;
+    max-width: 100%;
+    height: 55px;
+    object-fit: contain;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a href="index.html" class="brand" aria-label="Stackly Education Home">
+    <img src="assets/images/logo.webp"
+         alt="Stackly Education Logo"
+         class="brand-logo">
+</a>
+
+        <div class="sidebar-label">Main Menu</div>
+
+        <nav class="sidebar-nav" id="sidebarNav">
+            <button class="nav-link active" data-page="dashboard">
+                <i class="fa-solid fa-chart-pie"></i> Dashboard
+            </button>
+            <button class="nav-link" data-page="students">
+                <i class="fa-solid fa-user-graduate"></i> Student Management
+            </button>
+            <button class="nav-link" data-page="teachers">
+                <i class="fa-solid fa-chalkboard-user"></i> Teacher Management
+            </button>
+            <button class="nav-link" data-page="courses">
+                <i class="fa-solid fa-book-open"></i> Course Management
+            </button>
+            <button class="nav-link" data-page="assignments">
+                <i class="fa-solid fa-file-pen"></i> Assignments
+            </button>
+            <button class="nav-link" data-page="exams">
+                <i class="fa-solid fa-clipboard-check"></i> Exams & Results
+            </button>
+            <button class="nav-link" data-page="events">
+                <i class="fa-solid fa-calendar-days"></i> Events
+            </button>
+            <button class="nav-link" data-page="attendance">
+                <i class="fa-solid fa-calendar-check"></i> Attendance
+            </button>
+            <button class="nav-link" data-page="reports">
+                <i class="fa-solid fa-chart-column"></i> Reports
+            </button>
+            <button class="nav-link" data-page="messages">
+                <i class="fa-solid fa-envelope"></i> Messages
+            </button>
+
+            <div class="sidebar-label">Administration</div>
+
+            <button class="nav-link" data-page="settings">
+                <i class="fa-solid fa-gear"></i> Settings
+            </button>
+            <a class="nav-link" href="404.html">
+                <i class="fa-solid fa-circle-question"></i> Help Center
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <i class="fa-solid fa-headset"></i>
+                <h4>Need assistance?</h4>
+                <p>Visit our support center for help with your dashboard.</p>
+                <a href="404.html">Get Support <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+        <!-- Header without search bar -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div>
+                    <h1 id="pageTitle">Dashboard Overview</h1>
+                    <p>Welcome back to Stackly Education</p>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="admin-profile">
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div class="profile-info">
+                        <strong>Administrator</strong>
+                        <small id="headerUserEmail">Admin</small>
+                    </div>
+                </div>
+
+                <button type="button" class="logout-btn" id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <!-- Dashboard -->
+            <section class="page-section active" id="page-dashboard">
+                <div class="welcome-row">
+                    <div>
+                        <h2>Welcome to your dashboard!</h2>
+                        <p>Here's what's happening across your education platform.</p>
+                    </div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-download"></i> Export Report</a>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <p>Total Students</p>
+                            <span class="stat-icon purple"><i class="fa-solid fa-user-graduate"></i></span>
+                        </div>
+                        <h3>2,450</h3>
+                        <span class="trend"><i class="fa-solid fa-arrow-up"></i> 12.5% this month</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <p>Total Teachers</p>
+                            <span class="stat-icon orange"><i class="fa-solid fa-chalkboard-user"></i></span>
+                        </div>
+                        <h3>148</h3>
+                        <span class="trend"><i class="fa-solid fa-arrow-up"></i> 4.8% this month</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <p>Active Courses</p>
+                            <span class="stat-icon green"><i class="fa-solid fa-book-open"></i></span>
+                        </div>
+                        <h3>36</h3>
+                        <span class="trend neutral">Across all departments</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <p>Pending Assignments</p>
+                            <span class="stat-icon pink"><i class="fa-solid fa-file-circle-exclamation"></i></span>
+                        </div>
+                        <h3>87</h3>
+                        <span class="trend neutral">Needs review</span>
+                    </article>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Recent Student Activity</h3>
+                                <p>Latest student registrations</p>
+                            </div>
+                            <button class="btn btn-outline" data-goto="students">View Students</button>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><div class="person-cell"><span class="mini-avatar">AK</span><span><strong>Arun Kumar</strong><small>STU1001</small></span></div></td>
+                                        <td>Web Development</td>
+                                        <td><span class="status active">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="person-cell"><span class="mini-avatar">PS</span><span><strong>Priya Sharma</strong><small>STU1002</small></span></div></td>
+                                        <td>UI/UX Design</td>
+                                        <td><span class="status active">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="person-cell"><span class="mini-avatar">RK</span><span><strong>Rahul Kumar</strong><small>STU1003</small></span></div></td>
+                                        <td>Data Science</td>
+                                        <td><span class="status pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="person-cell"><span class="mini-avatar">DM</span><span><strong>Divya Mohan</strong><small>STU1004</small></span></div></td>
+                                        <td>Digital Marketing</td>
+                                        <td><span class="status active">Active</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Course Completion</h3>
+                                <p>Progress across popular courses</p>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-info"><span>Web Development</span><span>78%</span></div>
+                            <div class="progress-track"><div class="progress-bar" style="width:78%"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-info"><span>UI/UX Design</span><span>65%</span></div>
+                            <div class="progress-track"><div class="progress-bar orange" style="width:65%"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-info"><span>Data Science</span><span>52%</span></div>
+                            <div class="progress-track"><div class="progress-bar green" style="width:52%"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-info"><span>Digital Marketing</span><span>42%</span></div>
+                            <div class="progress-track"><div class="progress-bar pink" style="width:42%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Recent Activities</h3>
+                            <p>Latest platform updates</p>
+                        </div>
+                        <a href="404.html">View All</a>
+                    </div>
+
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-icon"><i class="fa-solid fa-user-plus"></i></span>
+                            <div><h4>New student registered</h4><p>A new student joined the Web Development course.</p><time>Today, 10:30 AM</time></div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon"><i class="fa-solid fa-file-circle-check"></i></span>
+                            <div><h4>Assignment submitted</h4><p>Students submitted their latest design assignments.</p><time>Today, 09:15 AM</time></div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon"><i class="fa-solid fa-calendar-plus"></i></span>
+                            <div><h4>Upcoming examination</h4><p>A new examination has been scheduled for the next week.</p><time>Yesterday</time></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students -->
+            <section class="page-section" id="page-students">
+                <div class="welcome-row">
+                    <div><h2>Student Management</h2><p>View and manage registered students.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Add Student</a>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-table="studentsTable" placeholder="Search students...">
+                        <select class="table-filter" data-table="studentsTable" data-column="4">
+                            <option value="">All Statuses</option>
+                            <option>Active</option>
+                            <option>Pending</option>
+                            <option>Inactive</option>
+                        </select>
+                        <a href="404.html" class="btn btn-outline"><i class="fa-solid fa-download"></i> Export</a>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table id="studentsTable">
+                            <thead><tr><th>Student</th><th>ID</th><th>Course</th><th>Joined Date</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">AK</span><strong>Arun Kumar</strong></div></td><td>STU1001</td><td>Web Development</td><td>05 Oct 2026</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a class="icon-btn" href="404.html" aria-label="View student"><i class="fa-solid fa-eye"></i></a><a class="icon-btn" href="404.html" aria-label="Edit student"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">PS</span><strong>Priya Sharma</strong></div></td><td>STU1002</td><td>UI/UX Design</td><td>07 Oct 2026</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a class="icon-btn" href="404.html" aria-label="View student"><i class="fa-solid fa-eye"></i></a><a class="icon-btn" href="404.html" aria-label="Edit student"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">RK</span><strong>Rahul Kumar</strong></div></td><td>STU1003</td><td>Data Science</td><td>10 Oct 2026</td><td><span class="status pending">Pending</span></td><td><div class="action-buttons"><a class="icon-btn" href="404.html" aria-label="View student"><i class="fa-solid fa-eye"></i></a><a class="icon-btn" href="404.html" aria-label="Edit student"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">DM</span><strong>Divya Mohan</strong></div></td><td>STU1004</td><td>Digital Marketing</td><td>12 Oct 2026</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a class="icon-btn" href="404.html" aria-label="View student"><i class="fa-solid fa-eye"></i></a><a class="icon-btn" href="404.html" aria-label="Edit student"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">VK</span><strong>Vikram Kumar</strong></div></td><td>STU1005</td><td>Web Development</td><td>15 Oct 2026</td><td><span class="status inactive">Inactive</span></td><td><div class="action-buttons"><a class="icon-btn" href="404.html" aria-label="View student"><i class="fa-solid fa-eye"></i></a><a class="icon-btn" href="404.html" aria-label="Edit student"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teachers -->
+            <section class="page-section" id="page-teachers">
+                <div class="welcome-row">
+                    <div><h2>Teacher Management</h2><p>Manage faculty profiles and teaching assignments.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Add Teacher</a>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-table="teachersTable" placeholder="Search teachers...">
+                        <select class="table-filter" data-table="teachersTable" data-column="3">
+                            <option value="">All Statuses</option><option>Active</option><option>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="teachersTable">
+                            <thead><tr><th>Teacher</th><th>Department</th><th>Courses</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">SR</span><strong>Sarah Raj</strong></div></td><td>Computer Science</td><td>4</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a href="404.html" class="icon-btn" aria-label="View"><i class="fa-solid fa-eye"></i></a><a href="404.html" class="icon-btn" aria-label="Edit"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">MK</span><strong>Manoj Kumar</strong></div></td><td>Design</td><td>3</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a href="404.html" class="icon-btn" aria-label="View"><i class="fa-solid fa-eye"></i></a><a href="404.html" class="icon-btn" aria-label="Edit"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">AP</span><strong>Anitha Priya</strong></div></td><td>Business</td><td>2</td><td><span class="status inactive">Inactive</span></td><td><div class="action-buttons"><a href="404.html" class="icon-btn" aria-label="View"><i class="fa-solid fa-eye"></i></a><a href="404.html" class="icon-btn" aria-label="Edit"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                                <tr><td><div class="person-cell"><span class="mini-avatar">RV</span><strong>Rajesh V</strong></div></td><td>Data Science</td><td>5</td><td><span class="status active">Active</span></td><td><div class="action-buttons"><a href="404.html" class="icon-btn" aria-label="View"><i class="fa-solid fa-eye"></i></a><a href="404.html" class="icon-btn" aria-label="Edit"><i class="fa-solid fa-pen"></i></a></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses -->
+            <section class="page-section" id="page-courses">
+                <div class="welcome-row">
+                    <div><h2>Course Management</h2><p>Organize courses and monitor student enrolments.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Add Course</a>
+                </div>
+
+                <div class="toolbar">
+                    <input type="search" id="courseSearch" placeholder="Search courses...">
+                    <select id="courseStatusFilter">
+                        <option value="">All Statuses</option><option>Published</option><option>Draft</option>
+                    </select>
+                </div>
+
+                <div class="cards-grid" id="courseCards">
+                    <article class="course-card" data-status="Published">
+                        <div class="course-icon"><i class="fa-solid fa-code"></i></div>
+                        <h3>Full Stack Web Development</h3>
+                        <p>Learn modern frontend and backend development skills.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 680 Students</span><span class="status published">Published</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                    <article class="course-card" data-status="Published">
+                        <div class="course-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+                        <h3>UI/UX Design Fundamentals</h3>
+                        <p>Understand design systems, wireframes, and prototyping.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 420 Students</span><span class="status published">Published</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                    <article class="course-card" data-status="Draft">
+                        <div class="course-icon"><i class="fa-solid fa-database"></i></div>
+                        <h3>Data Science Essentials</h3>
+                        <p>Explore data analysis, statistics, and visualization.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 250 Students</span><span class="status draft">Draft</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                    <article class="course-card" data-status="Published">
+                        <div class="course-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                        <h3>Digital Marketing</h3>
+                        <p>Build skills in SEO, social media, and campaign planning.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 310 Students</span><span class="status published">Published</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                    <article class="course-card" data-status="Published">
+                        <div class="course-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3>Cybersecurity Basics</h3>
+                        <p>Study security fundamentals and safe computing practices.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 190 Students</span><span class="status published">Published</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                    <article class="course-card" data-status="Draft">
+                        <div class="course-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                        <h3>Mobile App Development</h3>
+                        <p>Learn the fundamentals of modern mobile application design.</p>
+                        <div class="course-meta"><span><i class="fa-solid fa-users"></i> 0 Students</span><span class="status draft">Draft</span></div>
+                        <p style="margin-top:14px;margin-bottom:0"><a class="btn btn-outline" href="404.html">Manage Course</a></p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Assignments -->
+            <section class="page-section" id="page-assignments">
+                <div class="welcome-row">
+                    <div><h2>Assignments</h2><p>Track submissions and review student work.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Create Assignment</a>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-table="assignmentsTable" placeholder="Search assignments...">
+                        <select class="table-filter" data-table="assignmentsTable" data-column="3">
+                            <option value="">All Statuses</option><option>Pending</option><option>Completed</option><option>Overdue</option>
+                        </select>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="assignmentsTable">
+                            <thead><tr><th>Assignment</th><th>Course</th><th>Due Date</th><th>Status</th><th>Submissions</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>HTML & CSS Project</td><td>Web Development</td><td>29 Oct 2026</td><td><span class="status pending">Pending</span></td><td>45 / 60</td><td><a class="icon-btn" href="404.html" aria-label="View assignment"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Wireframe Design</td><td>UI/UX Design</td><td>30 Oct 2026</td><td><span class="status completed">Completed</span></td><td>40 / 40</td><td><a class="icon-btn" href="404.html" aria-label="View assignment"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Data Analysis Report</td><td>Data Science</td><td>24 Oct 2026</td><td><span class="status overdue">Overdue</span></td><td>18 / 35</td><td><a class="icon-btn" href="404.html" aria-label="View assignment"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>SEO Strategy</td><td>Digital Marketing</td><td>02 Nov 2026</td><td><span class="status pending">Pending</span></td><td>12 / 28</td><td><a class="icon-btn" href="404.html" aria-label="View assignment"><i class="fa-solid fa-eye"></i></a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exams -->
+            <section class="page-section" id="page-exams">
+                <div class="welcome-row">
+                    <div><h2>Exams & Results</h2><p>Manage examinations, schedules, and results.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Schedule Exam</a>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-table="examsTable" placeholder="Search examinations...">
+                        <select class="table-filter" data-table="examsTable" data-column="3">
+                            <option value="">All Statuses</option><option>Upcoming</option><option>Completed</option><option>Draft</option>
+                        </select>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="examsTable">
+                            <thead><tr><th>Examination</th><th>Course</th><th>Date</th><th>Status</th><th>Students</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>Frontend Development Test</td><td>Web Development</td><td>30 Oct 2026</td><td><span class="status upcoming">Upcoming</span></td><td>120</td><td><a class="icon-btn" href="404.html" aria-label="View exam"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Design Principles Exam</td><td>UI/UX Design</td><td>20 Oct 2026</td><td><span class="status completed">Completed</span></td><td>85</td><td><a class="icon-btn" href="404.html" aria-label="View exam"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Statistics Assessment</td><td>Data Science</td><td>05 Nov 2026</td><td><span class="status upcoming">Upcoming</span></td><td>75</td><td><a class="icon-btn" href="404.html" aria-label="View exam"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Marketing Fundamentals</td><td>Digital Marketing</td><td>18 Oct 2026</td><td><span class="status completed">Completed</span></td><td>90</td><td><a class="icon-btn" href="404.html" aria-label="View exam"><i class="fa-solid fa-eye"></i></a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Events -->
+            <section class="page-section" id="page-events">
+                <div class="welcome-row">
+                    <div><h2>Events</h2><p>Manage academic events, workshops, and seminars.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-plus"></i> Create Event</a>
+                </div>
+
+                <div class="toolbar">
+                    <input type="search" id="eventSearch" placeholder="Search events...">
+                    <a href="404.html" class="btn btn-outline"><i class="fa-solid fa-calendar-plus"></i> Event Calendar</a>
+                </div>
+
+                <div class="cards-grid" id="eventCards">
+                    <article class="event-card">
+                        <span class="event-date"><i class="fa-regular fa-calendar"></i> 29 OCT 2026</span>
+                        <h3>Web Development Workshop</h3>
+                        <p>Hands-on session covering modern frontend development techniques.</p>
+                        <p><i class="fa-regular fa-clock"></i> 10:00 AM &nbsp; <i class="fa-solid fa-location-dot"></i> Main Hall</p>
+                        <a href="404.html" class="btn btn-outline">View Details</a>
+                    </article>
+                    <article class="event-card">
+                        <span class="event-date"><i class="fa-regular fa-calendar"></i> 02 NOV 2026</span>
+                        <h3>Design Thinking Seminar</h3>
+                        <p>Explore user-centred design methods and creative problem-solving.</p>
+                        <p><i class="fa-regular fa-clock"></i> 11:30 AM &nbsp; <i class="fa-solid fa-location-dot"></i> Seminar Room</p>
+                        <a href="404.html" class="btn btn-outline">View Details</a>
+                    </article>
+                    <article class="event-card">
+                        <span class="event-date"><i class="fa-regular fa-calendar"></i> 06 NOV 2026</span>
+                        <h3>Career Guidance Session</h3>
+                        <p>Learn about career paths, interview preparation, and job opportunities.</p>
+                        <p><i class="fa-regular fa-clock"></i> 02:00 PM &nbsp; <i class="fa-solid fa-location-dot"></i> Auditorium</p>
+                        <a href="404.html" class="btn btn-outline">View Details</a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Attendance -->
+            <section class="page-section" id="page-attendance">
+                <div class="welcome-row">
+                    <div><h2>Attendance</h2><p>Monitor student attendance records.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-download"></i> Export Attendance</a>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card"><div class="stat-top"><p>Present Today</p><span class="stat-icon green"><i class="fa-solid fa-user-check"></i></span></div><h3>2,180</h3><span class="trend">89% attendance</span></article>
+                    <article class="stat-card"><div class="stat-top"><p>Absent Today</p><span class="stat-icon pink"><i class="fa-solid fa-user-xmark"></i></span></div><h3>270</h3><span class="trend neutral">11% of students</span></article>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-table="attendanceTable" placeholder="Search attendance...">
+                        <select class="table-filter" data-table="attendanceTable" data-column="3">
+                            <option value="">All Statuses</option><option>Present</option><option>Absent</option><option>Late</option>
+                        </select>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="attendanceTable">
+                            <thead><tr><th>Student</th><th>Student ID</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>Arun Kumar</td><td>STU1001</td><td>27 Oct 2026</td><td><span class="status present">Present</span></td><td><a href="404.html" class="icon-btn" aria-label="View attendance"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Priya Sharma</td><td>STU1002</td><td>27 Oct 2026</td><td><span class="status present">Present</span></td><td><a href="404.html" class="icon-btn" aria-label="View attendance"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Rahul Kumar</td><td>STU1003</td><td>27 Oct 2026</td><td><span class="status absent">Absent</span></td><td><a href="404.html" class="icon-btn" aria-label="View attendance"><i class="fa-solid fa-eye"></i></a></td></tr>
+                                <tr><td>Divya Mohan</td><td>STU1004</td><td>27 Oct 2026</td><td><span class="status late">Late</span></td><td><a href="404.html" class="icon-btn" aria-label="View attendance"><i class="fa-solid fa-eye"></i></a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports -->
+            <section class="page-section" id="page-reports">
+                <div class="welcome-row">
+                    <div><h2>Reports & Analytics</h2><p>Review platform performance and academic statistics.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-file-export"></i> Generate Report</a>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card"><div class="stat-top"><p>Course Completion</p><span class="stat-icon purple"><i class="fa-solid fa-graduation-cap"></i></span></div><h3>76%</h3><span class="trend">Overall completion</span></article>
+                    <article class="stat-card"><div class="stat-top"><p>Student Satisfaction</p><span class="stat-icon green"><i class="fa-solid fa-face-smile"></i></span></div><h3>94%</h3><span class="trend">Based on sample data</span></article>
+                    <article class="stat-card"><div class="stat-top"><p>Exam Pass Rate</p><span class="stat-icon orange"><i class="fa-solid fa-award"></i></span></div><h3>88%</h3><span class="trend">Across examinations</span></article>
+                    <article class="stat-card"><div class="stat-top"><p>Active Learners</p><span class="stat-icon pink"><i class="fa-solid fa-users"></i></span></div><h3>2,180</h3><span class="trend neutral">Current period</span></article>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header"><div><h3>Available Reports</h3><p>Select a report to continue.</p></div></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Report</th><th>Category</th><th>Last Updated</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>Student Enrolment Report</td><td>Students</td><td>27 Oct 2026</td><td><a href="404.html" class="btn btn-outline">View Report</a></td></tr>
+                                <tr><td>Course Performance Report</td><td>Academics</td><td>26 Oct 2026</td><td><a href="404.html" class="btn btn-outline">View Report</a></td></tr>
+                                <tr><td>Attendance Summary</td><td>Attendance</td><td>27 Oct 2026</td><td><a href="404.html" class="btn btn-outline">View Report</a></td></tr>
+                                <tr><td>Examination Results</td><td>Exams</td><td>25 Oct 2026</td><td><a href="404.html" class="btn btn-outline">View Report</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages -->
+            <section class="page-section" id="page-messages">
+                <div class="welcome-row">
+                    <div><h2>Messages</h2><p>View messages and communication requests.</p></div>
+                    <a href="404.html" class="btn"><i class="fa-solid fa-pen-to-square"></i> Compose Message</a>
+                </div>
+
+                <div class="panel">
+                    <div class="toolbar">
+                        <input type="search" class="table-search" data-list="messageList" placeholder="Search messages...">
+                        <select id="messageStatusFilter">
+                            <option value="">All Messages</option><option value="unread">Unread</option><option value="read">Read</option>
+                        </select>
+                    </div>
+
+                    <div id="messageList">
+                        <div class="message-item" data-status="unread">
+                            <span class="mini-avatar">AK</span>
+                            <div class="message-content"><h4>Arun Kumar <span class="status pending">Unread</span></h4><p>Hello Admin, I need some assistance with my course assignment submission.</p><small>Today, 10:30 AM</small></div>
+                            <a href="404.html" class="icon-btn" aria-label="Open message"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                        <div class="message-item" data-status="read">
+                            <span class="mini-avatar">PS</span>
+                            <div class="message-content"><h4>Priya Sharma <span class="status active">Read</span></h4><p>Thank you for helping me with the course registration process.</p><small>Yesterday, 03:15 PM</small></div>
+                            <a href="404.html" class="icon-btn" aria-label="Open message"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                        <div class="message-item" data-status="unread">
+                            <span class="mini-avatar">RK</span>
+                            <div class="message-content"><h4>Rahul Kumar <span class="status pending">Unread</span></h4><p>Could you please share the examination schedule for next month?</p><small>Yesterday, 11:45 AM</small></div>
+                            <a href="404.html" class="icon-btn" aria-label="Open message"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings -->
+            <section class="page-section" id="page-settings">
+                <div class="welcome-row">
+                    <div><h2>Settings</h2><p>Manage your dashboard preferences and account details.</p></div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Administrator Profile</h3><p>Basic account information</p></div></div>
+                        <form class="settings-form" id="profileForm">
+                            <div><label for="adminName">Full Name</label><input class="form-control" id="adminName" value="Administrator" required></div>
+                            <div><label for="adminEmail">Email Address</label><input class="form-control" id="adminEmail" type="email" placeholder="admin@example.com" required></div>
+                            <div><label for="adminRole">Role</label><input class="form-control" id="adminRole" value="Administrator" readonly></div>
+                            <button class="btn" type="submit">Save Profile</button>
+                        </form>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Dashboard Preferences</h3><p>General configuration</p></div></div>
+                        <form class="settings-form" id="preferencesForm">
+                            <div><label for="language">Language</label><select class="form-control" id="language"><option>English</option><option>Tamil</option></select></div>
+                            <div><label for="timezone">Timezone</label><select class="form-control" id="timezone"><option>Asia/Kolkata (IST)</option><option>UTC</option></select></div>
+                            <div><label for="notifications">Email Notifications</label><select class="form-control" id="notifications"><option>Enabled</option><option>Disabled</option></select></div>
+                            <button class="btn" type="submit">Save Preferences</button>
+                        </form>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Session Information</h3><p>Current login details</p></div></div>
+                        <p class="settings-note">Logged-in email: <strong id="settingsEmail">Not available</strong></p>
+                        <p class="settings-note" style="margin-top:12px">Login time: <strong id="loginTime">Not available</strong></p>
+                        <p class="settings-note" style="margin-top:12px">This dashboard uses browser session storage for demo login details.</p>
+                        <button type="button" class="btn btn-danger" id="settingsLogout" style="margin-top:18px"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Support</h3><p>Need help with your dashboard?</p></div></div>
+                        <p class="settings-note">For account assistance and additional settings, visit the support page.</p>
+                        <a href="404.html" class="btn btn-outline" style="margin-top:18px">Open Help Center</a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="footer">
+            © 2026 Stackly Education. All rights reserved.
+        </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+            const menuToggle = document.getElementById("menuToggle");
+            const logoutBtn = document.getElementById("logoutBtn");
+            const settingsLogout = document.getElementById("settingsLogout");
+            const pageTitle = document.getElementById("pageTitle");
+            const toast = document.getElementById("toast");
+
+            const pageTitles = {
+                dashboard: "Dashboard Overview",
+                students: "Student Management",
+                teachers: "Teacher Management",
+                courses: "Course Management",
+                assignments: "Assignments",
+                exams: "Exams & Results",
+                events: "Events",
+                attendance: "Attendance Management",
+                reports: "Reports & Analytics",
+                messages: "Messages",
+                settings: "Settings"
+            };
+
+            let toastTimeout;
+
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add("show");
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 2800);
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove("open");
+                overlay.classList.remove("show");
+            }
+
+            menuToggle.addEventListener("click", function () {
+                sidebar.classList.toggle("open");
+                overlay.classList.toggle("show");
+            });
+
+            overlay.addEventListener("click", closeSidebar);
+
+            // Sidebar navigation
+            document.querySelectorAll(".nav-link[data-page]").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    const page = this.dataset.page;
+
+                    document.querySelectorAll(".nav-link[data-page]").forEach(item => {
+                        item.classList.remove("active");
+                    });
+
+                    this.classList.add("active");
+
+                    document.querySelectorAll(".page-section").forEach(section => {
+                        section.classList.remove("active");
+                    });
+
+                    const targetPage = document.getElementById("page-" + page);
+
+                    if (targetPage) {
+                        targetPage.classList.add("active");
+                        pageTitle.textContent = pageTitles[page] || "Dashboard";
+                    }
+
+                    closeSidebar();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+            });
+
+            // Dashboard shortcuts
+            document.querySelectorAll("[data-goto]").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    const target = this.dataset.goto;
+                    const navLink = document.querySelector('.nav-link[data-page="' + target + '"]');
+                    if (navLink) navLink.click();
+                });
+            });
+
+            // Read the login details saved by login.html
+            let loginData = null;
+
+            try {
+                const savedLogin = sessionStorage.getItem("stacklyLogin");
+                if (savedLogin) loginData = JSON.parse(savedLogin);
+            } catch (error) {
+                loginData = null;
+            }
+
+            const userEmail = loginData && loginData.email
+                ? loginData.email
+                : "Admin";
+
+            document.getElementById("headerUserEmail").textContent = userEmail;
+            document.getElementById("settingsEmail").textContent = userEmail;
+            document.getElementById("adminEmail").value =
+                userEmail === "Admin" ? "" : userEmail;
+
+            if (loginData && loginData.loginTime) {
+                const parsedDate = new Date(loginData.loginTime);
+                document.getElementById("loginTime").textContent =
+                    isNaN(parsedDate.getTime())
+                        ? loginData.loginTime
+                        : parsedDate.toLocaleString();
+            }
+
+            // Logout functionality
+            function logout() {
+
+                sessionStorage.removeItem("stacklyLogin");
+                window.location.replace("login.html");
+            }
+
+            logoutBtn.addEventListener("click", logout);
+            settingsLogout.addEventListener("click", logout);
+
+            // Generic table search
+            document.querySelectorAll(".table-search").forEach(function (input) {
+                input.addEventListener("input", function () {
+                    const tableId = this.dataset.table;
+                    const listId = this.dataset.list;
+                    const query = this.value.trim().toLowerCase();
+
+                    if (tableId) {
+                        const table = document.getElementById(tableId);
+                        if (!table) return;
+
+                        table.querySelectorAll("tbody tr").forEach(function (row) {
+                            row.style.display = row.textContent.toLowerCase().includes(query)
+                                ? ""
+                                : "none";
+                        });
+                    }
+
+                    if (listId) {
+                        const list = document.getElementById(listId);
+                        if (!list) return;
+
+                        list.querySelectorAll(".message-item").forEach(function (item) {
+                            item.style.display = item.textContent.toLowerCase().includes(query)
+                                ? "flex"
+                                : "none";
+                        });
+                    }
+                });
+            });
+
+            // Generic table status filters
+            document.querySelectorAll(".table-filter").forEach(function (select) {
+                select.addEventListener("change", function () {
+                    const table = document.getElementById(this.dataset.table);
+                    if (!table) return;
+
+                    const columnIndex = Number(this.dataset.column);
+                    const filterValue = this.value.trim().toLowerCase();
+
+                    table.querySelectorAll("tbody tr").forEach(function (row) {
+                        const cell = row.cells[columnIndex];
+                        const cellText = cell ? cell.textContent.trim().toLowerCase() : "";
+
+                        row.style.display = !filterValue || cellText.includes(filterValue)
+                            ? ""
+                            : "none";
+                    });
+                });
+            });
+
+            // Course search and status filter
+            function filterCourses() {
+                const query = document.getElementById("courseSearch").value.toLowerCase().trim();
+                const status = document.getElementById("courseStatusFilter").value;
+
+                document.querySelectorAll("#courseCards .course-card").forEach(function (card) {
+                    const matchesQuery = card.textContent.toLowerCase().includes(query);
+                    const matchesStatus = !status || card.dataset.status === status;
+                    card.style.display = matchesQuery && matchesStatus ? "" : "none";
+                });
+            }
+
+            document.getElementById("courseSearch").addEventListener("input", filterCourses);
+            document.getElementById("courseStatusFilter").addEventListener("change", filterCourses);
+
+            // Event search
+            document.getElementById("eventSearch").addEventListener("input", function () {
+                const query = this.value.toLowerCase().trim();
+
+                document.querySelectorAll("#eventCards .event-card").forEach(function (card) {
+                    card.style.display = card.textContent.toLowerCase().includes(query)
+                        ? ""
+                        : "none";
+                });
+            });
+
+            // Message status filter
+            document.getElementById("messageStatusFilter").addEventListener("change", function () {
+                const selectedStatus = this.value;
+
+                document.querySelectorAll("#messageList .message-item").forEach(function (item) {
+                    item.style.display = !selectedStatus || item.dataset.status === selectedStatus
+                        ? "flex"
+                        : "none";
+                });
+            });
+
+            // Demo profile form
+            document.getElementById("profileForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const email = document.getElementById("adminEmail").value.trim();
+
+                if (!email) {
+                    showToast("Please enter an email address.");
+                    return;
+                }
+
+                document.getElementById("headerUserEmail").textContent = email;
+                document.getElementById("settingsEmail").textContent = email;
+
+                if (loginData) {
+                    loginData.email = email;
+                    sessionStorage.setItem("stacklyLogin", JSON.stringify(loginData));
+                }
+
+                showToast("Profile updated for this demo session.");
+            });
+
+            // Demo preferences form
+            document.getElementById("preferencesForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                showToast("Preferences saved for this demo session.");
+            });
+        });
+    </script>
+</body>
+</html>
