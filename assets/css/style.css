@@ -514,7 +514,7 @@ h6 {
 }
 .sec-title__title__shape::after {
   content: "";
-  background-image: url(../images/shapes/title-shape-1-1.png);
+  background-image: url(../images/shapes/title-shape-1-1.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -827,7 +827,7 @@ h6 {
 .block-title__decor {
   width: 21px;
   height: 14px;
-  background-image: url(../images/shapes/leaf-1-1.png);
+  background-image: url(../images/shapes/leaf-1-1.webp);
   background-repeat: no-repeat;
   background-position: top center;
   display: inline-block;
@@ -2385,7 +2385,7 @@ a:hover .instructor-card-two__social__icon {
 .courses-two .sec-title__title__shape::after,
 .courses-three .sec-title__title__shape::after,
 .courses-four .sec-title__title__shape::after {
-  background-image: url(../images/shapes/title-shape-1-2.png);
+  background-image: url(../images/shapes/title-shape-1-2.webp);
   background-size: 126px 13px;
   position: absolute;
   left: -16px;
@@ -4677,7 +4677,7 @@ body.megamenu-popup-active .mobile-nav__content {
   bottom: 0;
   background-color: var(--stackly-black, #20104B);
   opacity: 0.6;
-  cursor: url(../images/close.png), auto;
+  cursor: url(../images/close.webp), auto;
 }
 
 .mobile-nav__content {
@@ -4908,7 +4908,7 @@ body.megamenu-popup-active .mobile-nav__content {
   -webkit-transition-delay: 0.3s;
   background-color: #000000;
   opacity: 0.7;
-  cursor: url(../images/close.png), auto;
+  cursor: url(../images/close.webp), auto;
 }
 @media (max-width: 767px) {
   .search-popup__overlay {
@@ -6790,7 +6790,7 @@ li:hover .contact-page__info__icon__inner {
 }
 .main-slider-one__title__shape::after {
   content: "";
-  background-image: url(../images/shapes/main-slider-title-shape-1-1.png);
+  background-image: url(../images/shapes/main-slider-title-shape-1-1.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -6893,7 +6893,7 @@ li:hover .contact-page__info__icon__inner {
 }
 .main-slider-one__image__one::after {
   content: "";
-  background-image: url(../images/shapes/main-slider-shape-1-6.png);
+  background-image: url(../images/shapes/main-slider-shape-1-6.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -11156,7 +11156,7 @@ li:hover .contact-page__info__icon__inner {
   z-index: inherit;
 }
 .testimonials-three .sec-title__title__shape::after {
-  background-image: url(../images/shapes/title-shape-1-3.png);
+  background-image: url(../images/shapes/title-shape-1-3.webp);
   background-size: 173px 18px;
   position: absolute;
   left: -83px;
@@ -11338,7 +11338,7 @@ li:hover .contact-page__info__icon__inner {
   z-index: inherit;
 }
 .online-class .sec-title__title__shape::after {
-  background-image: url(../images/shapes/title-shape-1-2.png);
+  background-image: url(../images/shapes/title-shape-1-2.webp);
   background-size: 126px 13px;
   position: absolute;
   left: -46px;
@@ -12439,7 +12439,7 @@ li:hover .contact-page__info__icon__inner {
   bottom: 0;
   background-color: var(--stackly-black, #20104B);
   opacity: 0.8;
-  cursor: url(../images/close.png), auto;
+  cursor: url(../images/close.webp), auto;
 }
 .sidebar-one__content {
   width: 310px;
